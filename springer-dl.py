@@ -7,7 +7,7 @@ import sys
 global PAGES
 
 ##########ONLY CHANGE THE LINK ######
-LINK="https://link.springer.com/search?query=malware&search-within=Journal&facet-journal-id=11416"
+LINK="https://link.springer.com/search?query=malware&search-within=BookSeries&facet-series=10634"
 #################
 def prepareTheLink(LINK):
     result = requests.get(LINK)
@@ -89,9 +89,13 @@ def generateReport(titles,links):
 
 def getNoOfPages(soup):
     #No of pages
-    samples = soup.findAll("span","number-of-pages")
-    NoOfPages= int(samples[0].string)
-    return NoOfPages
+    try:
+        samples = soup.findAll("span","number-of-pages")
+        NoOfPages= int(samples[0].string)
+        return NoOfPages
+    except Exception as e:
+        return 1
+
 
 
 def downloadReportOnly(soup):
@@ -142,8 +146,12 @@ def downloadAllArticlesPlusReport(soup):
     titles=[]
     links=[]
     #No of pages
-    samples = soup.findAll("span","number-of-pages")
-    NoOfPages= int(samples[0].string)
+    try:
+        samples = soup.findAll("span","number-of-pages")
+        NoOfPages= int(samples[0].string)
+    except Exception as e:
+        NoOfPages = 1 
+
     print "No Of Search Pages:  "+str(NoOfPages)
 
     # No of TotalArticles
@@ -203,4 +211,3 @@ soup = prepareTheLink(LINK)
 NoOfPages =getNoOfPages(soup)
 PAGES = generatePagesLinks(LINK)
 downloadAllArticlesPlusReport(soup)
-
