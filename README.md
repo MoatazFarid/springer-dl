@@ -1,6 +1,6 @@
 # Springer-dl
-Python script that download all Articles in https://link.springer.com/
-|| This is just a beta version ||
+Python script that download all Articles in "https://link.springer.com/" Journal's Search 
+|| This is just a beta version that ONLY Works within Journal's Search ||
 
 ## Installation
 ```
